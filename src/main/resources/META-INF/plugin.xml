@@ -1,0 +1,53 @@
+<idea-plugin>
+    <id>ru.napoleonit.summer-plugin</id>
+    <name>Summer framework</name>
+    <vendor email="kt@napoleonit.ru" url="http://napoleonit.com">Napoleon IT</vendor>
+
+    <description><![CDATA[
+    Summer framework plugin with intentions:
+    <br>
+    <br>
+    on *View.State {<br>
+        var <b>propertyName ⇦ Alt+Enter there</b>: Type<br>
+    }
+    <br>
+    <br>
+    on override fun createViewStateProxy(vs: *View.State) =<br>
+        <b>object ⇦ Alt+Enter there</b> : *View.State {<br>
+        <br>
+    }<br>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <project-components>
+        <component>
+            <implementation-class>ru.napoleonit.summerPlugin.StoreByOwnerPropertyIntention</implementation-class>
+        </component>
+    </project-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <intentionAction>
+            <className>ru.napoleonit.summerPlugin.StoreByOwnerPropertyIntention</className>
+            <category>Summer Intentions</category>
+        </intentionAction>
+        <intentionAction>
+            <className>ru.napoleonit.summerPlugin.AddMissingStoreByOwnersObjectIntention</className>
+            <category>Summer Intentions</category>
+        </intentionAction>
+    </extensions>
+
+    <depends>org.jetbrains.kotlin</depends>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="ru.napoleonit.summerPlugin.CreateFeatureAction"
+            class="ru.napoleonit.summerPlugin.CreateFeatureAction" text="New Summer presentation">
+            <add-to-group group-id="NewGroup" anchor="first" />
+        </action>
+    </actions>
+</idea-plugin>
