@@ -79,12 +79,13 @@ class StoreByOwnerPropertyIntention : PsiElementBaseIntentionAction(), Intention
             } as KtClass
 
         val presenterClassBody = presenterClass.body
-        val createViewStateProxyFun = presenterClassBody!!.children
-            .find {
-                (it as? KtFunction)?.name == "createViewStateProxy"
-            } as KtFunction
+        val viewStateProxyProp = presenterClassBody!!.children
+            .filterIsInstance<KtProperty>()
+            .find { property ->
+                property.name == "viewStateProxy"
+            } ?: return
 
-        val viewStateProxyObject = createViewStateProxyFun.children
+        val viewStateProxyObject = viewStateProxyProp.children
             .find {
                 (it is KtObjectLiteralExpression)
             } as KtObjectLiteralExpression

@@ -47,11 +47,4 @@
 
     <depends>org.jetbrains.kotlin</depends>
 
-    <actions>
-        <!-- Add your actions here -->
-<!--        <action id="ru.napoleonit.summerPlugin.CreateFeatureAction"-->
-<!--            class="ru.napoleonit.summerPlugin.CreateFeatureAction" text="New Summer presentation">-->
-<!--            <add-to-group group-id="NewGroup" anchor="first" />-->
-<!--        </action>-->
-    </actions>
 </idea-plugin>

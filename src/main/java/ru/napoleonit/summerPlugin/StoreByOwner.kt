@@ -8,7 +8,7 @@ import org.jetbrains.kotlin.psi.KtPsiFactory
 import org.jetbrains.kotlin.psi.psiUtil.getChildOfType
 
 fun KtPsiFactory.createStoreByOwnerProperty(name: String) =
-    createProperty("override var $name by store(vs::$name, initialValue = null)")
+    createProperty("override var $name by store({ it::$name }, initial = null)")
 
 fun KtClassBody.containsPropertyWithName(name: String) =
     children.any { it is KtProperty && it.name == name }
