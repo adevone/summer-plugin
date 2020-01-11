@@ -18,7 +18,7 @@ override val viewStateProxy = >>>object<<< : Feature.State {
 ```
 
 ##### Store property
-Click `alt+Enter` when caret on property name in `State` interface and select `store`
+Click `alt+Enter` when caret on property name in `State` interface and select `Store property`
 ```
 object Feature {
     interface State {

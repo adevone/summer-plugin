@@ -23,7 +23,7 @@ class AddMissingViewStateImplementationsIntention : PsiElementBaseIntentionActio
     private val logger = Logger.getInstance("StoreByOwnerPropertyIntention")
 
     override fun getText(): String {
-        return "storeByOwner missing properties"
+        return "Store missing properties"
     }
 
     override fun getFamilyName(): String {

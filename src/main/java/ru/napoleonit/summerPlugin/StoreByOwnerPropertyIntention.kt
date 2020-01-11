@@ -27,7 +27,7 @@ class StoreByOwnerPropertyIntention : PsiElementBaseIntentionAction(), Intention
      * intention actions available.
      */
     override fun getText(): String {
-        return "storeByOwner"
+        return "Store property"
     }
 
     /**
