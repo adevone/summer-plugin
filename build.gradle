@@ -21,8 +21,8 @@ dependencies {
 }
 
 intellij {
-    version '2019.2.4'
-    plugins = ["org.jetbrains.kotlin:1.3.70-release-IJ2019.2-1"]
+    version '2019.2'
+    plugins = ["Kotlin"]
 }
 
 compileKotlin {
