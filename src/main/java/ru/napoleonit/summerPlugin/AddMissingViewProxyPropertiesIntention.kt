@@ -3,7 +3,6 @@ package ru.napoleonit.summerPlugin
 import com.intellij.codeInsight.intention.IntentionAction
 import com.intellij.codeInsight.intention.PriorityAction
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction
-import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
@@ -18,16 +17,14 @@ import org.jetbrains.kotlin.psi.*
  * @author dsl
  */
 @NonNls
-class AddMissingViewStateImplementationsIntention : PsiElementBaseIntentionAction(), IntentionAction, PriorityAction {
-
-    private val logger = Logger.getInstance("StoreByOwnerPropertyIntention")
+class AddMissingViewProxyPropertiesIntention : PsiElementBaseIntentionAction(), IntentionAction, PriorityAction {
 
     override fun getText(): String {
-        return "Store missing properties"
+        return "Add missing properties to viewProxy"
     }
 
     override fun getFamilyName(): String {
-        return "intentionDescriptions/AddMissingStoreByOwnersObjectIntention"
+        return "intentionDescriptions/AddMissingViewProxyPropertiesIntention"
     }
 
     override fun isAvailable(
@@ -38,8 +35,8 @@ class AddMissingViewStateImplementationsIntention : PsiElementBaseIntentionActio
         val leafElement = element as? LeafPsiElement ?: return false
         val objectDeclaration = leafElement.parent as? KtObjectDeclaration ?: return false
         val objectLiteral = objectDeclaration.parent as? KtObjectLiteralExpression ?: return false
-        val parentFunction = objectLiteral.parent as? KtFunction ?: return false
-        return parentFunction.name == "createViewState"
+        val parentProp = objectLiteral.parent as? KtProperty ?: return false
+        return parentProp.name == "viewProxy"
     }
 
     @Throws(IncorrectOperationException::class)
@@ -49,17 +46,15 @@ class AddMissingViewStateImplementationsIntention : PsiElementBaseIntentionActio
         val objectDeclaration = leafElement.parent as KtObjectDeclaration
         val viewStateProxyObjectBody = objectDeclaration.body!!
 
-        val viewObject = element.containingFile.children
+        val stateInterface = element.containingFile.children
             .find {
-                (it as? KtObjectDeclaration)?.name?.contains("View") == true
-            } as KtObjectDeclaration
-
-        val stateInterface = viewObject.body!!.children
-            .find {
-                (it as? KtClass)?.let { ktClass -> ktClass.isInterface() && ktClass.name == "State" } == true
+                val clazz = (it as? KtClass)
+                clazz?.let { ktClass ->
+                    ktClass.isInterface() && ktClass.name?.contains("View") == true
+                } == true
             } as KtClass
 
-        val stateProperties = stateInterface.body!!.children
+        val proxyProperties = stateInterface.body!!.children
             .mapNotNull {
                 (it as? KtProperty)
             }
@@ -69,11 +64,16 @@ class AddMissingViewStateImplementationsIntention : PsiElementBaseIntentionActio
         }
 
         val factory = KtPsiFactory(project)
-        stateProperties.forEach { stateProperty ->
-            val propertyName = stateProperty.name!!
+        proxyProperties.forEach { property ->
+            val propertyName = property.name!!
             if (!viewStateProxyObjectBody.containsPropertyWithName(propertyName)) {
-                val newProperty = factory.createStoreByOwnerProperty(propertyName)
-                viewStateProxyObjectBody.addBefore(newProperty, viewStateProxyObjectBody.lastChild)
+                if (property.isVar) {
+                    val newProperty = factory.createStateProperty(property)
+                    viewStateProxyObjectBody.addBefore(newProperty, viewStateProxyObjectBody.lastChild)
+                } else {
+                    val newProperty = factory.createDoOnlyWhenAttachedEvent(property)
+                    viewStateProxyObjectBody.addBefore(newProperty, viewStateProxyObjectBody.lastChild)
+                }
             }
         }
     }

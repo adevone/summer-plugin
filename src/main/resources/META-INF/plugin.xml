@@ -7,13 +7,13 @@
     Summer framework plugin with intentions:
     <br>
     <br>
-    on *View.State {<br>
+    on *View* {<br>
         var <b>propertyName ⇦ Alt+Enter there</b>: Type<br>
     }
     <br>
     <br>
-    on override fun createViewStateProxy(vs: *View.State) =<br>
-        <b>object ⇦ Alt+Enter there</b> : *View.State {<br>
+    on override val viewStateProxy(vs: *View*) =<br>
+        <b>object ⇦ Alt+Enter there</b> : *View* {<br>
         <br>
     }<br>
     ]]></description>
@@ -26,22 +26,26 @@
 
     <project-components>
         <component>
-            <implementation-class>ru.napoleonit.summerPlugin.StoreByOwnerPropertyIntention</implementation-class>
+            <implementation-class>ru.napoleonit.summerPlugin.AddStateToViewProxyIntention</implementation-class>
         </component>
     </project-components>
 
     <extensions defaultExtensionNs="com.intellij">
         <intentionAction>
-            <className>ru.napoleonit.summerPlugin.StoreByOwnerPropertyIntention</className>
-            <category>Summer Intentions</category>
+            <className>ru.napoleonit.summerPlugin.AddStateToViewProxyIntention</className>
+            <category>Summer intentions</category>
         </intentionAction>
         <intentionAction>
-            <className>ru.napoleonit.summerPlugin.AddMissingStoreByOwnersObjectIntention</className>
-            <category>Summer Intentions</category>
+            <className>ru.napoleonit.summerPlugin.AddMissingViewProxyPropertiesIntention</className>
+            <category>Summer intentions</category>
         </intentionAction>
         <intentionAction>
-            <className>ru.napoleonit.summerPlugin.AddMissingViewStateImplementationsIntention</className>
-            <category>Summer Intentions</category>
+            <className>ru.napoleonit.summerPlugin.EventOnlyWhenAttachedIntention</className>
+            <category>Summer intentions</category>
+        </intentionAction>
+        <intentionAction>
+            <className>ru.napoleonit.summerPlugin.EventExactlyOnceIntention</className>
+            <category>Summer intentions</category>
         </intentionAction>
     </extensions>
 
