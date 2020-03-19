@@ -9,20 +9,26 @@
 
 # Intentions
 
-##### Store missing properties
-Click `alt+Enter` when caret on `object` that implements `viewStateProxy` and select `Store missing properties`
+##### Implement missing properties
+Click `alt+Enter` when caret on `object` that implements `viewProxy` and select `Store missing properties`
 ```
-override val viewStateProxy = >>>object<<< : Feature.State {
-    override var banner by store({ it::banner }, initial = null)
+override val viewProxy = >>>object<<< : FeatureView {
+    override var banner by state({ it::banner }, initial = null)
 }
 ```
 
-##### Store property
-Click `alt+Enter` when caret on property name in `State` interface and select `Store property`
+##### State property
+Click `alt+Enter` when caret on property name in `View` interface and select `state`
 ```
-object Feature {
-    interface State {
-        var >>>banner<<<: Banner?
-    }
+interface FeatureView {
+    var >>>banner<<<: Banner?
+}
+```
+
+##### Event
+Click `alt+Enter` when caret on property name in `View` interface and select `doExactlyOnce` or `doOnlyWhenAttached`
+```
+interface FeatureView {
+    val >>>doSomething<<<: () -> Unit
 }
 ```
