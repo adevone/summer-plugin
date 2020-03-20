@@ -9,7 +9,9 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.util.IncorrectOperationException
 import org.jetbrains.annotations.NonNls
+import org.jetbrains.kotlin.idea.quickfix.classForRefactor
 import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.psi.psiUtil.nonStaticOuterClasses
 
 /**
  * Implements an intention action to replace a ternary statement with if-then-else
@@ -46,7 +48,7 @@ class AddMissingViewProxyPropertiesIntention : PsiElementBaseIntentionAction(), 
         val objectDeclaration = leafElement.parent as KtObjectDeclaration
         val viewStateProxyObjectBody = objectDeclaration.body!!
 
-        val stateInterface = element.containingFile.children
+        val viewInterface = element.containingFile.children
             .find {
                 val clazz = (it as? KtClass)
                 clazz?.let { ktClass ->
@@ -54,10 +56,7 @@ class AddMissingViewProxyPropertiesIntention : PsiElementBaseIntentionAction(), 
                 } == true
             } as KtClass
 
-        val proxyProperties = stateInterface.body!!.children
-            .mapNotNull {
-                (it as? KtProperty)
-            }
+        val proxyProperties = viewInterface.getPropertiesRecursive()
 
         if (viewStateProxyObjectBody.children.isEmpty()) {
             viewStateProxyObjectBody.clearFromWhitespaces()
@@ -76,6 +75,17 @@ class AddMissingViewProxyPropertiesIntention : PsiElementBaseIntentionAction(), 
                 }
             }
         }
+    }
+
+    private fun KtClass.getPropertiesRecursive(): List<KtProperty> {
+        val properties = this.getProperties()
+        val parentProperties = this.getSuperTypeList()?.entries
+            ?.flatMap { superType ->
+                val superClass = superType.typeReference?.classForRefactor()
+                superClass?.getPropertiesRecursive() ?: emptyList()
+            }
+            ?: emptyList()
+        return properties + parentProperties
     }
 
     override fun startInWriteAction(): Boolean = true
