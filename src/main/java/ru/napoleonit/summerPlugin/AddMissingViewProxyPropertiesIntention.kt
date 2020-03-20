@@ -11,7 +11,6 @@ import com.intellij.util.IncorrectOperationException
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.kotlin.idea.quickfix.classForRefactor
 import org.jetbrains.kotlin.psi.*
-import org.jetbrains.kotlin.psi.psiUtil.nonStaticOuterClasses
 
 /**
  * Implements an intention action to replace a ternary statement with if-then-else
@@ -52,7 +51,7 @@ class AddMissingViewProxyPropertiesIntention : PsiElementBaseIntentionAction(), 
             .find {
                 val clazz = (it as? KtClass)
                 clazz?.let { ktClass ->
-                    ktClass.isInterface() && ktClass.name?.contains("View") == true
+                    ktClass.isInterface() && ktClass.name?.endsWith("View") == true
                 } == true
             } as KtClass
 

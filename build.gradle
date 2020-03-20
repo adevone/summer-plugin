@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'ru.napoleonit'
-version '0.15.3'
+version '0.16.0'
 
 sourceCompatibility = 1.8
 
@@ -23,6 +23,7 @@ dependencies {
 intellij {
     version '2019.2'
     plugins = ["java", "Kotlin"]
+    alternativeIdePath = "/Applications/Android Studio.app/Contents"
 }
 
 compileKotlin {

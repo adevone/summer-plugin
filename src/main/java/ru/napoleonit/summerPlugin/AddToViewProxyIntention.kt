@@ -9,7 +9,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.util.IncorrectOperationException
 import org.jetbrains.kotlin.psi.*
-import org.jetbrains.kotlin.psi.psiUtil.getChildrenOfType
 
 abstract class AddToViewProxyIntention : PsiElementBaseIntentionAction(), IntentionAction, PriorityAction {
 
