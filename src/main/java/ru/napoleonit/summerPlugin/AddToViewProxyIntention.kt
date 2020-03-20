@@ -31,6 +31,8 @@ abstract class AddToViewProxyIntention : PsiElementBaseIntentionAction(), Intent
 
         val property = element.parent as KtProperty
         val propertyName = property.text
+        val body = property.parent as? KtClassBody ?: return
+        val viewInterface = body.parent as? KtClass ?: return
 
         val presenterClass = property.containingFile.children
             .find {
@@ -38,31 +40,42 @@ abstract class AddToViewProxyIntention : PsiElementBaseIntentionAction(), Intent
             } as KtClass
 
         val presenterClassBody = presenterClass.body
-        val viewStateProxyProp = presenterClassBody!!.children
-            .filterIsInstance<KtProperty>()
-            .find { presenterProperty ->
-                presenterProperty.name == "viewProxy"
-            } ?: return
+        var viewProxyProp = presenterClassBody!!.viewProxyProperty()
 
-        val viewStateProxyObject = viewStateProxyProp.children
+        val factory = KtPsiFactory(project)
+
+        if (viewProxyProp == null) {
+            viewProxyProp = factory.createProperty("override val viewProxy = object : ${viewInterface.name} {}")
+            presenterClassBody.addAfter(viewProxyProp, presenterClassBody.lBrace)
+            viewProxyProp = presenterClassBody.viewProxyProperty()!!
+        }
+
+        val viewStateProxyObject = viewProxyProp.children
             .find {
                 (it is KtObjectLiteralExpression)
             } as KtObjectLiteralExpression
 
-        val viewStateProxyObjectBody = viewStateProxyObject.objectDeclaration.children
+        val viewProxyObjectBody = viewStateProxyObject.objectDeclaration.children
             .find {
                 it is KtClassBody
             } as KtClassBody
 
-        if (viewStateProxyObjectBody.containsPropertyWithName(propertyName)) return
+        if (viewProxyObjectBody.containsPropertyWithName(propertyName)) return
 
-        if (viewStateProxyObjectBody.children.isEmpty()) {
-            viewStateProxyObjectBody.clearFromWhitespaces()
+        if (viewProxyObjectBody.children.isEmpty()) {
+            viewProxyObjectBody.clearFromWhitespaces()
         }
 
-        val factory = KtPsiFactory(project)
         val newProperty = createProperty(factory, property)
-        viewStateProxyObjectBody.addBefore(newProperty, viewStateProxyObjectBody.lastChild)
+        viewProxyObjectBody.addBefore(newProperty, viewProxyObjectBody.lastChild)
+    }
+
+    fun KtClassBody.viewProxyProperty(): KtProperty? {
+        return this.children
+            .filterIsInstance<KtProperty>()
+            .find { presenterProperty ->
+                presenterProperty.name == "viewProxy"
+            }
     }
 
     protected abstract fun createProperty(factory: KtPsiFactory, property: KtProperty): KtProperty
