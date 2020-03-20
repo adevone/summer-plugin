@@ -9,6 +9,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.util.IncorrectOperationException
 import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.psi.psiUtil.getChildrenOfType
 
 abstract class AddToViewProxyIntention : PsiElementBaseIntentionAction(), IntentionAction, PriorityAction {
 
@@ -48,6 +49,8 @@ abstract class AddToViewProxyIntention : PsiElementBaseIntentionAction(), Intent
             viewProxyProp = factory.createProperty("override val viewProxy = object : ${viewInterface.name} {}")
             presenterClassBody.addAfter(viewProxyProp, presenterClassBody.lBrace)
             viewProxyProp = presenterClassBody.viewProxyProperty()!!
+            presenterClassBody.addBefore(factory.createNewLine(2), viewProxyProp)
+            presenterClassBody.addAfter(factory.createNewLine(1), viewProxyProp)
         }
 
         val viewStateProxyObject = viewProxyProp.children
