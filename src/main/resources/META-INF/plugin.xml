@@ -1,7 +1,7 @@
 <idea-plugin>
-    <id>ru.napoleonit.summer-plugin</id>
+    <id>io.adev.summer-plugin</id>
     <name>Summer framework</name>
-    <vendor email="kt@napoleonit.ru" url="http://napoleonit.com">Napoleon IT</vendor>
+    <vendor email="kt@napoleonit.ru" url="https://github.com/adevone">Kirill Terekhov</vendor>
 
     <description><![CDATA[
     Summer framework plugin with intentions:
@@ -26,25 +26,33 @@
 
     <project-components>
         <component>
-            <implementation-class>ru.napoleonit.summerPlugin.AddStateToViewProxyIntention</implementation-class>
+            <implementation-class>io.adev.summer.plugin.AddStateToViewProxyIntention</implementation-class>
         </component>
     </project-components>
 
     <extensions defaultExtensionNs="com.intellij">
         <intentionAction>
-            <className>ru.napoleonit.summerPlugin.AddStateToViewProxyIntention</className>
+            <className>io.adev.summer.plugin.AddStateToViewProxyIntention</className>
             <category>Summer intentions</category>
         </intentionAction>
         <intentionAction>
-            <className>ru.napoleonit.summerPlugin.AddMissingViewProxyPropertiesIntention</className>
+            <className>io.adev.summer.plugin.AddMissingViewProxyPropertiesIntention</className>
             <category>Summer intentions</category>
         </intentionAction>
         <intentionAction>
-            <className>ru.napoleonit.summerPlugin.EventOnlyWhenAttachedIntention</className>
+            <className>io.adev.summer.plugin.EventOnlyWhenAttachedIntention</className>
             <category>Summer intentions</category>
         </intentionAction>
         <intentionAction>
-            <className>ru.napoleonit.summerPlugin.EventExactlyOnceIntention</className>
+            <className>io.adev.summer.plugin.EventExactlyOnceIntention</className>
+            <category>Summer intentions</category>
+        </intentionAction>
+        <intentionAction>
+            <className>io.adev.summer.plugin.IosEventImplementationIntention</className>
+            <category>Summer intentions</category>
+        </intentionAction>
+        <intentionAction>
+            <className>io.adev.summer.plugin.AndroidEventImplementationIntention</className>
             <category>Summer intentions</category>
         </intentionAction>
     </extensions>

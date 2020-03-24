@@ -1,4 +1,4 @@
-package ru.napoleonit.summerPlugin
+package io.adev.summer.plugin
 
 import com.intellij.codeInsight.intention.IntentionAction
 import com.intellij.codeInsight.intention.PriorityAction

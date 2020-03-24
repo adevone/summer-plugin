@@ -4,8 +4,8 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.70'
 }
 
-group 'ru.napoleonit'
-version '0.16.0'
+group 'io.adev'
+version '0.17.0'
 
 sourceCompatibility = 1.8
 

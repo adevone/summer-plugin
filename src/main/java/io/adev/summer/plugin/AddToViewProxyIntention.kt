@@ -1,30 +1,13 @@
-package ru.napoleonit.summerPlugin
+package io.adev.summer.plugin
 
-import com.intellij.codeInsight.intention.IntentionAction
 import com.intellij.codeInsight.intention.PriorityAction
-import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
-import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.util.IncorrectOperationException
 import org.jetbrains.kotlin.psi.*
 
-abstract class AddToViewProxyIntention : PsiElementBaseIntentionAction(), IntentionAction, PriorityAction {
-
-    override fun isAvailable(
-        project: Project,
-        editor: Editor?,
-        element: PsiElement
-    ): Boolean {
-        val identifier = element as? LeafPsiElement ?: return false
-        val property = identifier.parent as? KtProperty ?: return false
-        val body = property.parent as? KtClassBody ?: return false
-        val interfaze = body.parent as? KtClass ?: return false
-        return interfaze.name?.endsWith("View") == true && isPropertyCorrect(property)
-    }
-
-    abstract fun isPropertyCorrect(property: KtProperty): Boolean
+abstract class AddToViewProxyIntention : PropertyIntention() {
 
     @Throws(IncorrectOperationException::class)
     override fun invoke(project: Project, editor: Editor, element: PsiElement) {
@@ -72,7 +55,7 @@ abstract class AddToViewProxyIntention : PsiElementBaseIntentionAction(), Intent
         viewProxyObjectBody.addBefore(newProperty, viewProxyObjectBody.lastChild)
     }
 
-    fun KtClassBody.viewProxyProperty(): KtProperty? {
+    private fun KtClassBody.viewProxyProperty(): KtProperty? {
         return this.children
             .filterIsInstance<KtProperty>()
             .find { presenterProperty ->

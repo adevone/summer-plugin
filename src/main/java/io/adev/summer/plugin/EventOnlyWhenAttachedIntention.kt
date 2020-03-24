@@ -1,4 +1,4 @@
-package ru.napoleonit.summerPlugin
+package io.adev.summer.plugin
 
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.kotlin.psi.KtProperty

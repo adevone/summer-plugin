@@ -32,3 +32,12 @@ interface FeatureView {
     val >>>doSomething<<<: () -> Unit
 }
 ```
+
+##### Copy event implementation
+Click `alt+Enter` when caret on property name in `View` interface and select `Copy iOS implementation` or `Copy Android implementation`
+```
+interface FeatureView {
+    val >>>doSomething<<<: () -> Unit
+}
+```
+

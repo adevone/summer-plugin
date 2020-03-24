@@ -1,4 +1,4 @@
-package ru.napoleonit.summerPlugin
+package io.adev.summer.plugin
 
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
