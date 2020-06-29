@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.4.16'
-    id 'org.jetbrains.kotlin.jvm' version '1.3.70'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.72'
 }
 
 group 'io.adev'
@@ -14,17 +14,30 @@ repositories {
 }
 
 dependencies {
-    def kotlinVersion = "1.3.70"
+    def kotlinVersion = "1.3.72"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+// Releases: https://www.jetbrains.com/intellij-repository/releases/
 intellij {
-    version '2019.2'
-    plugins = ["java", "Kotlin"]
-    alternativeIdePath = "/Applications/Android Studio.app/Contents"
+    type "CL"
+    version '2020.1.1'
+    plugins = [
+            "com.intellij.kotlinNative.platformDeps:201.7223.121",
+            "org.jetbrains.kotlin.native.appcode:1.3.72-release-AppCode-201.7223.121-22"
+    ]
 }
+
+// https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/clion/clion/2020.1.1/clion-2020.1.1.pom
+// https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/clion/clion/201.7223.86/clion-201.7223.86.pom
+
+//    version '2019.2'
+//    version 'CL-2020.1'
+//    version 'CL-201.7223'
+//    plugins = ["java", "Kotlin"]
+//    plugins = ["java", "org.jetbrains.kotlin.native.appcode:1.3.70-release-AppCode-201.6668.170-18"]
 
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"

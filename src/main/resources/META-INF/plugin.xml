@@ -24,6 +24,9 @@
     <depends>com.intellij.modules.lang</depends>
     -->
 
+    <depends>com.intellij.modules.java</depends>
+    <depends>org.jetbrains.kotlin.native.appcode</depends>
+
     <project-components>
         <component>
             <implementation-class>io.adev.summer.plugin.AddStateToViewProxyIntention</implementation-class>
@@ -56,7 +59,5 @@
             <category>Summer intentions</category>
         </intentionAction>
     </extensions>
-
-    <depends>org.jetbrains.kotlin</depends>
 
 </idea-plugin>
