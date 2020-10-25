@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'io.adev'
-version '0.17.1'
+version '0.17.2'
 
 sourceCompatibility = 1.8
 
@@ -21,7 +21,7 @@ dependencies {
 }
 
 intellij {
-    version '2019.3'
+    version '2020.1'
     plugins = ["java", "Kotlin"]
     alternativeIdePath = "/Applications/Android Studio.app/Contents"
 }
