@@ -57,6 +57,9 @@
         </intentionAction>
     </extensions>
 
+    <idea-version since-build="181.4892.5"/>
+
     <depends>org.jetbrains.kotlin</depends>
+    <depends>com.intellij.modules.lang</depends>
 
 </idea-plugin>
