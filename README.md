@@ -1,6 +1,6 @@
 # Installation
 
-1. [Download latest plugin version](https://github.com/adevone/summer-plugin/releases/download/0.17.2/summer-plugin-0.17.2.zip)
+1. [Download latest plugin version](https://github.com/adevone/summer-plugin/releases/download/0.18.1/summer-plugin-0.18.1.zip)
 2. Open Intellij plugins page
 3. Click to gear icon
 4. Select "Install Plugin from disk..."
