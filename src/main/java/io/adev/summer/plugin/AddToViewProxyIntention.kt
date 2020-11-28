@@ -17,22 +17,22 @@ abstract class AddToViewProxyIntention : PropertyIntention() {
         val body = property.parent as? KtClassBody ?: return
         val viewInterface = body.parent as? KtClass ?: return
 
-        val presenterClass = property.containingFile.children
+        val viewModelClass = property.containingFile.children
             .find {
-                (it as? KtClass)?.name?.contains("Presenter") == true
+                (it as? KtClass)?.name?.contains("ViewModel") == true
             } as KtClass
 
-        val presenterClassBody = presenterClass.body
-        var viewProxyProp = presenterClassBody!!.viewProxyProperty()
+        val viewModelClassBody = viewModelClass.body
+        var viewProxyProp = viewModelClassBody!!.viewProxyProperty()
 
         val factory = KtPsiFactory(project)
 
         if (viewProxyProp == null) {
             viewProxyProp = factory.createProperty("override val viewProxy = object : ${viewInterface.name} {}")
-            presenterClassBody.addAfter(viewProxyProp, presenterClassBody.lBrace)
-            viewProxyProp = presenterClassBody.viewProxyProperty()!!
-            presenterClassBody.addBefore(factory.createNewLine(2), viewProxyProp)
-            presenterClassBody.addAfter(factory.createNewLine(1), viewProxyProp)
+            viewModelClassBody.addAfter(viewProxyProp, viewModelClassBody.lBrace)
+            viewProxyProp = viewModelClassBody.viewProxyProperty()!!
+            viewModelClassBody.addBefore(factory.createNewLine(2), viewProxyProp)
+            viewModelClassBody.addAfter(factory.createNewLine(1), viewProxyProp)
         }
 
         val viewStateProxyObject = viewProxyProp.children
@@ -58,8 +58,8 @@ abstract class AddToViewProxyIntention : PropertyIntention() {
     private fun KtClassBody.viewProxyProperty(): KtProperty? {
         return this.children
             .filterIsInstance<KtProperty>()
-            .find { presenterProperty ->
-                presenterProperty.name == "viewProxy"
+            .find { viewModelProperty ->
+                viewModelProperty.name == "viewProxy"
             }
     }
 

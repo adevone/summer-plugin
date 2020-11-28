@@ -12,10 +12,18 @@ class AndroidEventImplementationIntention : EventImplementationIntention() {
 
     override fun formatEventImplementation(property: KtProperty, params: List<EventParam>): String {
         return """
-override val ${property.name} = { ${params.joinToString { "${it.name}: ${it.typeName}" }} ->
+override val ${property.name}: ${formatType(params)} = { ${formatParamNames(params)}
     
 }
         """.trim()
+    }
+
+    private fun formatType(params: List<EventParam>): String {
+        return "(${params.joinToString { it.typeName }}) -> Unit"
+    }
+
+    private fun formatParamNames(params: List<EventParam>): String {
+        return params.joinToString { it.name } + if (params.isNotEmpty()) " ->" else ""
     }
 
     override fun getFamilyName(): String {
