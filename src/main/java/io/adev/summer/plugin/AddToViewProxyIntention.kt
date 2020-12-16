@@ -63,8 +63,40 @@ abstract class AddToViewProxyIntention : PropertyIntention() {
             viewProxyObjectBody.clearFromWhitespaces()
         }
 
+        val viewProxyPropertyNames = viewProxyObjectBody.children.mapNotNull { vpElement ->
+            val vpProperty = vpElement as? KtProperty
+            vpProperty?.name
+        }
+
+        var interfacePropertyAbove: KtProperty? = null
+        for (iElement in body.children) {
+            val interfaceProperty = iElement as? KtProperty
+            if (interfaceProperty != null) {
+                val interfacePropertyName = interfaceProperty.name
+                if (interfacePropertyName == property.name) {
+                    break
+                } else {
+                    if (interfacePropertyName in viewProxyPropertyNames) {
+                        interfacePropertyAbove = interfaceProperty
+                    }
+                }
+            }
+        }
+
+        val viewProxyPropertyAbove = if (interfacePropertyAbove != null) {
+            viewProxyObjectBody.children.find { vpElement ->
+                val viewProxyProperty = vpElement as? KtProperty
+                viewProxyProperty?.name == interfacePropertyAbove?.name
+            }
+        } else {
+            null
+        }
+
         val newProperty = createProperty(factory, property)
-        viewProxyObjectBody.addBefore(newProperty, viewProxyObjectBody.lastChild)
+        viewProxyObjectBody.addAfter(
+            newProperty,
+            viewProxyPropertyAbove ?: viewProxyObjectBody.firstChild
+        )
     }
 
     private fun KtClassBody.viewProxyProperty(): KtProperty? {
