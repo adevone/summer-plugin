@@ -1,6 +1,6 @@
 # Installation
 
-1. [Download latest plugin version](https://github.com/adevone/summer-plugin/releases/download/0.18.1/summer-plugin-0.18.1.zip)
+1. [Download latest plugin version](https://github.com/adevone/summer-plugin/releases/download/0.18.2/summer-plugin-0.18.2.zip)
 2. Open Intellij plugins page
 3. Click to gear icon
 4. Select "Install Plugin from disk..."
@@ -12,7 +12,7 @@
 ##### Implement missing properties
 Click `alt+Enter` when caret on `object` that implements `viewProxy` and select `Store missing properties`
 ```
-override val viewProxy = >>>object<<< : FeatureView {
+override val viewProxy: FeatureView = >>>object<<< : FeatureView {
     override var banner by state({ it::banner }, initial = null)
 }
 ```
