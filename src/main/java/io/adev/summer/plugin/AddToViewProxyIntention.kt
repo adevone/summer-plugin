@@ -17,30 +17,42 @@ abstract class AddToViewProxyIntention : PropertyIntention() {
         val body = property.parent as? KtClassBody ?: return
         val viewInterface = body.parent as? KtClass ?: return
 
-        val viewModelClass = property.containingFile.children
-            .find {
-                (it as? KtClass)?.name?.contains("ViewModel") == true
-            } as KtClass
-
-        val viewModelClassBody = viewModelClass.body
-        var viewProxyProp = viewModelClassBody!!.viewProxyProperty()
-
         val factory = KtPsiFactory(project)
 
-        if (viewProxyProp == null) {
-            viewProxyProp = factory.createProperty("override val viewProxy = object : ${viewInterface.name} {}")
-            viewModelClassBody.addAfter(viewProxyProp, viewModelClassBody.lBrace)
-            viewProxyProp = viewModelClassBody.viewProxyProperty()!!
-            viewModelClassBody.addBefore(factory.createNewLine(2), viewProxyProp)
-            viewModelClassBody.addAfter(factory.createNewLine(1), viewProxyProp)
+        val fileObjectDeclarations = findObjectDeclarations(property.containingFile.children)
+        var viewObjectDeclaration = fileObjectDeclarations.find { obj ->
+            obj.getSuperTypeList()?.entries?.any { entry ->
+                entry.typeAsUserType?.referencedName == viewInterface.name
+            } == true
         }
 
-        val viewStateProxyObject = viewProxyProp.children
-            .find {
-                (it is KtObjectLiteralExpression)
-            } as KtObjectLiteralExpression
+        if (viewObjectDeclaration == null) {
 
-        val viewProxyObjectBody = viewStateProxyObject.objectDeclaration.children
+            val viewModelClass = property.containingFile.children
+                .find {
+                    (it as? KtClass)?.name?.contains("ViewModel") == true
+                } as KtClass
+
+            val viewModelClassBody = viewModelClass.body
+            var viewProxyProp = viewModelClassBody!!.viewProxyProperty()
+
+            if (viewProxyProp == null) {
+                viewProxyProp = factory.createProperty("override val viewProxy = object : ${viewInterface.name} {}")
+                viewModelClassBody.addAfter(viewProxyProp, viewModelClassBody.lBrace)
+                viewProxyProp = viewModelClassBody.viewProxyProperty()!!
+                viewModelClassBody.addBefore(factory.createNewLine(2), viewProxyProp)
+                viewModelClassBody.addAfter(factory.createNewLine(1), viewProxyProp)
+            }
+
+            val viewStateProxyObject = viewProxyProp.children
+                    .find {
+                        (it is KtObjectLiteralExpression)
+                    } as KtObjectLiteralExpression
+
+            viewObjectDeclaration = viewStateProxyObject.objectDeclaration
+        }
+
+        val viewProxyObjectBody = viewObjectDeclaration.children
             .find {
                 it is KtClassBody
             } as KtClassBody
@@ -61,6 +73,17 @@ abstract class AddToViewProxyIntention : PropertyIntention() {
             .find { viewModelProperty ->
                 viewModelProperty.name == "viewProxy"
             }
+    }
+
+    private fun findObjectDeclarations(elements: Array<PsiElement>): List<KtObjectDeclaration> {
+        return elements.flatMap { element ->
+            val obj = element as? KtObjectDeclaration
+            val children = findObjectDeclarations(element.children)
+            if (obj != null)
+                children + obj
+            else
+                children
+        }
     }
 
     protected abstract fun createProperty(factory: KtPsiFactory, property: KtProperty): KtProperty

@@ -21,8 +21,8 @@ abstract class PropertyIntention : PsiElementBaseIntentionAction(), IntentionAct
         val identifier = element as? LeafPsiElement ?: return false
         val property = identifier.parent as? KtProperty ?: return false
         val body = property.parent as? KtClassBody ?: return false
-        val interfaze = body.parent as? KtClass ?: return false
-        return interfaze.name?.endsWith("View") == true && isPropertyCorrect(property)
+        val interfaze = body.parent as? KtClass
+        return interfaze != null && isPropertyCorrect(property)
     }
 
     abstract fun isPropertyCorrect(property: KtProperty): Boolean
