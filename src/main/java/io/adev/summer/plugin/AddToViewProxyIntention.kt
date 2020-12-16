@@ -37,7 +37,7 @@ abstract class AddToViewProxyIntention : PropertyIntention() {
             var viewProxyProp = viewModelClassBody!!.viewProxyProperty()
 
             if (viewProxyProp == null) {
-                viewProxyProp = factory.createProperty("override val viewProxy = object : ${viewInterface.name} {}")
+                viewProxyProp = factory.createProperty("override val viewProxy: ${viewInterface.name} = object : ${viewInterface.name} {}")
                 viewModelClassBody.addAfter(viewProxyProp, viewModelClassBody.lBrace)
                 viewProxyProp = viewModelClassBody.viewProxyProperty()!!
                 viewModelClassBody.addBefore(factory.createNewLine(2), viewProxyProp)
