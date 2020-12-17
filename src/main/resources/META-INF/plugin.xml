@@ -4,18 +4,13 @@
     <vendor email="kt@napoleonit.ru" url="https://github.com/adevone">Kirill Terekhov</vendor>
 
     <description><![CDATA[
-    Summer framework plugin with intentions:
-    <br>
-    <br>
-    on *View* {<br>
-        var <b>propertyName ⇦ Alt+Enter there</b>: Type<br>
-    }
-    <br>
-    <br>
-    on override val viewStateProxy(vs: *View*) =<br>
-        <b>object ⇦ Alt+Enter there</b> : *View* {<br>
-        <br>
-    }<br>
+<b>Summer framework plugin</b><br>
+<a href="https://github.com/adevone/summer">Framework page</a>
+<br>
+<br>
+Adds convenience intentions to generate <b>viewProxy</b> and platform implementations for events
+<br>
+<a href="https://github.com/adevone/summer-plugin">Instructions</a>
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
