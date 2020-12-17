@@ -1,16 +1,10 @@
-# Installation
-
-1. [Download latest plugin version](https://github.com/adevone/summer-plugin/releases/download/0.18.2/summer-plugin-0.18.2.zip)
-2. Open Intellij plugins page
-3. Click to gear icon
-4. Select "Install Plugin from disk..."
-5. Select downloaded `.zip` file
-6. Restart you IDE
+[Summer framework](https://github.com/adevone/summer) plugin. [Plugin page](https://plugins.jetbrains.com/plugin/15616-summer-framework)  
+Adds convenience intentions to generate *viewProxy* and platform implementations for events
 
 # Intentions
 
 ##### Implement missing properties
-Click `alt+Enter` when caret on `object` that implements `viewProxy` and select `Store missing properties`
+Click `alt+Enter` when the caret on `object` that implements `viewProxy` and select `Store missing properties`
 ```
 override val viewProxy: FeatureView = >>>object<<< : FeatureView {
     override var banner by state({ it::banner }, initial = null)
@@ -18,7 +12,7 @@ override val viewProxy: FeatureView = >>>object<<< : FeatureView {
 ```
 
 ##### State property
-Click `alt+Enter` when caret on property name in `View` interface and select `state`
+Click `alt+Enter` when the caret on property name in `View` interface and select `state`
 ```
 interface FeatureView {
     var >>>banner<<<: Banner?
@@ -41,3 +35,11 @@ interface FeatureView {
 }
 ```
 
+# Manual installation
+
+1. [Download the latest plugin version](https://github.com/adevone/summer-plugin/releases)
+2. Open Intellij plugins page
+3. Click to gear icon
+4. Select "Install Plugin from disk..."
+5. Select downloaded `.zip` file
+6. Restart you IDE
