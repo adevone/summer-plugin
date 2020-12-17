@@ -1,5 +1,5 @@
 [Summer framework](https://github.com/adevone/summer) plugin. [Plugin page](https://plugins.jetbrains.com/plugin/15616-summer-framework)  
-Adds convenience intentions to generate *viewProxy* and platform implementations for events
+Adds convenience intentions to generate `viewProxy` and platform implementations for events
 
 # Intentions
 
