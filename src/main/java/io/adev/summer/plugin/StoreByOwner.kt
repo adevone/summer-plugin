@@ -27,12 +27,12 @@ fun KtPsiFactory.createStateProperty(property: KtProperty): KtProperty {
 
 fun KtPsiFactory.createDoOnlyWhenAttachedEvent(property: KtProperty): KtProperty {
     val name = property.name!!
-    return createProperty("override val $name = event { it.$name }.doOnlyWhenAttached()")
+    return createProperty("override val $name = event { it.$name }.perform.onlyWhenAttached()")
 }
 
 fun KtPsiFactory.createDoExactlyOnceEvent(property: KtProperty): KtProperty {
     val name = property.name!!
-    return createProperty("override val $name = event { it.$name }.doExactlyOnce()")
+    return createProperty("override val $name = event { it.$name }.perform.exactlyOnce()")
 }
 
 fun KtClassBody.containsPropertyWithName(name: String) =
