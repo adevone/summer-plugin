@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>io.adev.summer-plugin</id>
-    <name>Summer framework</name>
+    <name>Summer Framework</name>
     <vendor email="kt@napoleonit.ru" url="https://github.com/adevone">Kirill Terekhov</vendor>
 
     <description><![CDATA[
