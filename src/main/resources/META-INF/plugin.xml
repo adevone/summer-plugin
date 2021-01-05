@@ -52,7 +52,7 @@ Adds convenience intentions to generate <b>viewProxy</b> and platform implementa
         </intentionAction>
     </extensions>
 
-    <idea-version since-build="181.4892.5"/>
+    <idea-version since-build="192.7142.36"/>
 
     <depends>org.jetbrains.kotlin</depends>
     <depends>com.intellij.modules.lang</depends>
