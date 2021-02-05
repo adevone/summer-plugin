@@ -5,7 +5,7 @@ Adds convenience intentions to generate `viewProxy` and events platform implemen
 
 ##### Implement missing properties
 Click `alt+Enter` when the caret on `object` that implements `viewProxy` and select `Store missing properties`
-```
+```kotlin
 override val viewProxy: FeatureView = >>>object<<< : FeatureView {
     override var banner by state({ it::banner }, initial = null)
 }
@@ -13,7 +13,7 @@ override val viewProxy: FeatureView = >>>object<<< : FeatureView {
 
 ##### State property
 Click `alt+Enter` when the caret on property name in `View` interface and select `state`
-```
+```kotlin
 interface FeatureView {
     var >>>banner<<<: Banner?
 }
@@ -21,7 +21,7 @@ interface FeatureView {
 
 ##### Event
 Click `alt+Enter` when caret on property name in `View` interface and select `doExactlyOnce` or `doOnlyWhenAttached`
-```
+```kotlin
 interface FeatureView {
     val >>>doSomething<<<: () -> Unit
 }
@@ -29,7 +29,7 @@ interface FeatureView {
 
 ##### Copy event implementation
 Click `alt+Enter` when caret on property name in `View` interface and select `Copy iOS implementation` or `Copy Android implementation`
-```
+```kotlin
 interface FeatureView {
     val >>>doSomething<<<: () -> Unit
 }
