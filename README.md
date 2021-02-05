@@ -42,4 +42,4 @@ interface FeatureView {
 3. Click to gear icon
 4. Select "Install Plugin from disk..."
 5. Select downloaded `.zip` file
-6. Restart you IDE
+6. Restart your IDE
